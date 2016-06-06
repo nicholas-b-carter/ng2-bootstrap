@@ -337,7 +337,7 @@ body {
 /************* START CONTENT **************/
 
 #content p,
-#content li,
+#content li:not([class^='L']) ,
 #content .accordion h4 {
   font-weight: 300;
   font-size: 16px;
@@ -349,11 +349,11 @@ body {
 }
 
 #content p,
-#content li {
+#content li:not([class^='L']) {
   line-height: 30px;
 }
 
-#content li a,
+#content li:not([class^='L']) a,
 #content p a {
   /*color: #0808df;*/
   text-decoration: none;
@@ -581,8 +581,9 @@ body {
   #main-menu {
     height: calc(100% - 55px);
   }
+}
 
-  /*#main {*/
-    /*margin-top: 105px;*/
-  /*}*/
+pre {
+  word-wrap: normal;
+  word-break: normal;
 }

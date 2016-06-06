@@ -15,9 +15,9 @@ marked.Renderer.prototype.code = function renderCode(code, lang) {
   const classMap = this.options.langPrefix + lang;
 
   if (!lang) {
-    return `<pre><code>${out}\n</code></pre>`;
+    return `<pre class="prettyprint">${out}</pre>`;
   }
-  return `<pre class="${classMap}"><code class="${classMap}">${out}\n</code></pre>\n`;
+  return `<pre class="prettyprint ${classMap}">${out}</pre>\n`;
 };
 
 /*eslint no-process-env:0, camelcase:0*/
