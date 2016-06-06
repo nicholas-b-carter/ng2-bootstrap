@@ -85,7 +85,8 @@
 }
 
 .prettyprint .atn {
-  color: #647f11
+  /*color: #647f11*/
+  color: #31708f
 }
 
 .prettyprint .com {
@@ -102,6 +103,7 @@
 
 .prettyprint .pln {
   color: #5C707A
+  /*color: #8a6d3b*/
 }
 
 .prettyprint .dec {
@@ -132,7 +134,8 @@
   }
 
   .prettyprint .atn {
-    color: #647f11
+    /*color: #647f11*/
+    color: #31708f
   }
 
   .prettyprint .com {

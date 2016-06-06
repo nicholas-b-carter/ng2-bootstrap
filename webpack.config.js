@@ -1,4 +1,4 @@
-/* eslint global-require: 0 */
+/* eslint global-require: 0, no-magic-numbers: 0 */
 'use strict';
 
 const path = require('path');
@@ -31,7 +31,7 @@ const config = {
   devtool,
   debug: false,
 
-  verbose: true,
+  verbose: false,
   displayErrorDetails: true,
   context: __dirname,
   stats: {
@@ -52,8 +52,8 @@ const config = {
       'es6-promise',
       'zone.js',
       'reflect-metadata',
-      // '@angular/common',
-      // '@angular/core'
+      '@angular/common',
+      '@angular/core'
     ],
     'angular2-bootstrap-demo': 'demo'
   },
@@ -91,7 +91,7 @@ const config = {
   module: {
     loaders: [
       // support markdown
-      {test: /\.md$/, loader: 'html?minimize=false!markdown'},
+      {test: /\.md$/, loader: 'html!markdown'},
       // Support for *.json files.
       {test: /\.json$/, loader: 'json'},
       // Support for CSS as raw text
@@ -116,6 +116,18 @@ const config = {
       /reflect-metadata/,
       /zone\.js\/dist\/zone-microtask/
     ]
+  },
+
+  htmlLoader: {
+    minimize: true,
+    removeAttributeQuotes: false,
+    caseSensitive: true,
+    customAttrSurround: [
+      [/#/, /(?:)/],
+      [/\*/, /(?:)/],
+      [/\[?\(?/, /(?:)/]
+    ],
+    customAttrAssign: [/\)?\]?=/]
   },
 
   plugins: [
@@ -145,23 +157,21 @@ const config = {
       //production only
       new webpack.optimize.UglifyJsPlugin({
         beautify: false,
-        mangle: false,
-        comments: false,
+
+        mangle: {
+          screw_ie8: true,
+          keep_fnames: true
+        },
+
         compress: {
           screw_ie8: true
-          //warnings: false,
-          //drop_debugger: false
-        }
-        //verbose: true,
-        //beautify: false,
-        //quote_style: 3
+        },
+
+        comments: false
       }),
       new CompressionPlugin({
-        asset: '{file}.gz',
-        algorithm: 'gzip',
-        regExp: /\.js$|\.html|\.css|.map$/,
-        threshold: 10240,
-        minRatio: 0.8
+        regExp: /\.css$|\.html$|\.js$|\.map$/,
+        threshold: 2 * 1024
       })
     ];
 

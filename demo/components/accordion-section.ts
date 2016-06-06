@@ -10,7 +10,7 @@ let titleDoc = require('../../components/accordion/title.md');
 
 let ts = require('!!raw!./accordion/accordion-demo.ts');
 let html = require('!!raw!./accordion/accordion-demo.html');
-console.log(ts)
+
 @Component({
   selector: 'accordion-section',
   directives: [DemoSectionComponent, AccordionDemoComponent, CORE_DIRECTIVES],

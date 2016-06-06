@@ -3,6 +3,16 @@ body {
   background-color: #f5f9fb;
 }
 
+body,html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
 .text-red {
   color: #cd151e;
 }
@@ -262,7 +272,7 @@ body {
   font-size: 14px;
   padding: 0 0 0 12px;
   margin: 14px 0;
-  font-family: 'Source Code Pro';
+  /*font-family: 'Source Code Pro';*/
   border-left: 1px solid transparent;
   list-style: none;
 }
