@@ -4,6 +4,8 @@
  */
 'use strict';
 
+const conf = require('../ac-config');
+
 const DEFAULT_PORT = 8080;
 const DEFAULT_COMPRESSION_TRESHOLD = 2048;
 
@@ -65,7 +67,7 @@ module.exports = webpackMerge(commonConfig, {
      *
      * See: http://webpack.github.io/docs/configuration.html#output-path
      */
-    path: helpers.root('dist'),
+    path: helpers.root(conf.dist),
 
     /**
      * Specifies the name of each output file on disk.
@@ -199,7 +201,7 @@ module.exports = webpackMerge(commonConfig, {
   tslint: {
     emitErrors: true,
     failOnHint: true,
-    resourcePath: 'src'
+    resourcePath: conf.src
   },
 
   /**
@@ -234,5 +236,4 @@ module.exports = webpackMerge(commonConfig, {
     clearImmediate: false,
     setImmediate: false
   }
-
 });

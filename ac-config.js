@@ -1,11 +1,13 @@
 'use strict';
-// todo: in common HtmlWebpackPlugin && chunks
+const pkg = require('./package.json');
+
 module.exports = {
   // metadata
-  title: 'Angular2 Webpack Starter by @gdi2290 from @AngularClass',
+  title: pkg.description,
   baseUrl: '/',
   // root folder name
   src: 'demo',
+  src_comp: 'components',
   dist: 'demo-build',
   htmlIndexes: ['index.html', 'index-bs4.html'],
   // webpack entry

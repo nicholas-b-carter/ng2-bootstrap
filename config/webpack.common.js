@@ -168,7 +168,7 @@ const config = {
         test: /\.html$/,
         loader: 'raw-loader',
         // exclude: [helpers.root('src/index.html')]
-        exclude: conf.htmlIndexes.map(str => helpers.root(path.join(conf.src, str)))
+        exclude: helpers.excludeIndexHtml(conf.src, conf.htmlIndexes)
       },
       // support markdown
       {test: /\.md$/, loader: 'html!markdown'}

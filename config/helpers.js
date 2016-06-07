@@ -19,5 +19,10 @@ function root(...args) {
 }
 
 
+function excludeIndexHtml(src, htmlIndexes) {
+  return htmlIndexes.map(str => root(path.join(src, str)));
+}
+
 exports.hasProcessFlag = hasProcessFlag;
 exports.root = root;
+exports.excludeIndexHtml = excludeIndexHtml;

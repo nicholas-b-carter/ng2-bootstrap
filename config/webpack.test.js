@@ -3,6 +3,7 @@
  * @author: @AngularClass
  */
 'use strict';
+const conf = require('../ac-config');
 
 const helpers = require('./helpers');
 
@@ -49,7 +50,7 @@ module.exports = {
     /**
      * Make sure root is src
      */
-    root: helpers.root('src')
+    root: helpers.root(conf.src)
 
   },
 
@@ -130,7 +131,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/json-loader
        */
-      {test: /\.json$/, loader: 'json-loader', exclude: [helpers.root('src/index.html')]},
+      {test: /\.json$/, loader: 'json-loader', exclude: helpers.excludeIndexHtml(conf.src, conf.htmlIndexes)},
 
       /**
        * Raw loader support for *.css files
@@ -138,7 +139,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      {test: /\.css$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')]},
+      {test: /\.css$/, loader: 'raw-loader', exclude: helpers.excludeIndexHtml(conf.src, conf.htmlIndexes)},
 
       /**
        * Raw loader support for *.html
@@ -146,7 +147,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      {test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')]}
+      {test: /\.html$/, loader: 'raw-loader', exclude: helpers.excludeIndexHtml(conf.src, conf.htmlIndexes)}
 
     ],
 
@@ -166,7 +167,8 @@ module.exports = {
       {
         test: /\.(js|ts)$/,
         loader: 'istanbul-instrumenter-loader',
-        include: helpers.root('src'),
+        // todo: solve this somehow
+        include: helpers.root(conf.src_comp),
         exclude: [
           /\.(e2e|spec)\.ts$/,
           /node_modules/
@@ -215,7 +217,7 @@ module.exports = {
   tslint: {
     emitErrors: false,
     failOnHint: false,
-    resourcePath: 'src'
+    resourcePath: conf.src
   },
 
   /**
@@ -232,5 +234,6 @@ module.exports = {
     clearImmediate: false,
     setImmediate: false
   }
-
 };
+
+console.log('root', helpers.root(conf.src));
