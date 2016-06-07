@@ -12,7 +12,7 @@
  * all here! Crazy huh. So we need to do some setup
  */
 'use strict';
-const conf = require('../ac-config');
+var conf = require('../ac-config');
 
 Error.stackTraceLimit = Infinity;
 
@@ -31,8 +31,8 @@ require('zone.js/dist/sync-test');
 // RxJS
 require('rxjs/Rx');
 
-const testing = require('@angular/core/testing');
-const browser = require('@angular/platform-browser-dynamic/testing');
+var testing = require('@angular/core/testing');
+var browser = require('@angular/platform-browser-dynamic/testing');
 
 testing.setBaseTestProviders(
   browser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
@@ -50,7 +50,7 @@ Object.assign(global, testing);
  * any file that ends with spec.js and get its path. By passing in true
  * we say do this recursively
  */
-const testContext = require.context(`../${conf.src}`, true, /\.spec\.ts/);
+var testContext = require.context('../' + conf.src_comp, true, /\.spec\.ts/);
 
 /*
  * get all the files, for each file, call the context function

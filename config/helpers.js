@@ -3,24 +3,27 @@
  * @author: @AngularClass
  */
 'use strict';
-const path = require('path');
+var path = require('path');
 
 // Helper functions
-const ROOT = path.resolve(__dirname, '..');
+var ROOT = path.resolve(__dirname, '..');
 
-console.log('root directory:', `${root()}\n`);
+console.log('root directory:', root() + '\n');
 
 function hasProcessFlag(flag) {
   return process.argv.join('').indexOf(flag) > -1;
 }
 
-function root(...args) {
-  return path.join(...[ROOT].concat(args));
+function root(args) {
+  /* eslint-disable */
+  args = Array.prototype.slice.call(arguments, 0);
+  return path.join.apply(path, [ROOT].concat(args));
 }
 
-
 function excludeIndexHtml(src, htmlIndexes) {
-  return htmlIndexes.map(str => root(path.join(src, str)));
+  return htmlIndexes.map(function (str) {
+    return root(path.join(src, str));
+  });
 }
 
 exports.hasProcessFlag = hasProcessFlag;

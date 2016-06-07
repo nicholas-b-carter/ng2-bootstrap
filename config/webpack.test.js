@@ -3,20 +3,20 @@
  * @author: @AngularClass
  */
 'use strict';
-const conf = require('../ac-config');
+var conf = require('../ac-config');
 
-const helpers = require('./helpers');
+var helpers = require('./helpers');
 
 /**
  * Webpack Plugins
  */
 // const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
+var DefinePlugin = require('webpack/lib/DefinePlugin');
 
 /**
  * Webpack Constants
  */
-const ENV = process.env.ENV = process.env.NODE_ENV = 'test';
+var ENV = process.env.ENV = process.env.NODE_ENV = 'test';
 
 /**
  * Webpack configuration
@@ -50,7 +50,7 @@ module.exports = {
     /**
      * Make sure root is src
      */
-    root: helpers.root(conf.src)
+    root: helpers.root(conf.src_comp)
 
   },
 
@@ -90,6 +90,7 @@ module.exports = {
         loader: 'source-map-loader',
         exclude: [
         // these packages have problems with their sourcemaps
+          helpers.root('node_modules'),
           helpers.root('node_modules/rxjs'),
           helpers.root('node_modules/@angular')
         ]}
@@ -217,7 +218,7 @@ module.exports = {
   tslint: {
     emitErrors: false,
     failOnHint: false,
-    resourcePath: conf.src
+    resourcePath: conf.src_comp
   },
 
   /**
@@ -235,5 +236,3 @@ module.exports = {
     setImmediate: false
   }
 };
-
-console.log('root', helpers.root(conf.src));
