@@ -1,13 +1,15 @@
+/* eslint no-process-env: 0 */
 /**
  * @author: @AngularClass
  */
+'use strict';
 
 const helpers = require('./helpers');
 
 /**
  * Webpack Plugins
  */
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
+// const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 
 /**
@@ -47,7 +49,7 @@ module.exports = {
     /**
      * Make sure root is src
      */
-    root: helpers.root('src'),
+    root: helpers.root('src')
 
   },
 
@@ -87,9 +89,9 @@ module.exports = {
         loader: 'source-map-loader',
         exclude: [
         // these packages have problems with their sourcemaps
-        helpers.root('node_modules/rxjs'),
-        helpers.root('node_modules/@angular')
-      ]}
+          helpers.root('node_modules/rxjs'),
+          helpers.root('node_modules/@angular')
+        ]}
 
     ],
 
@@ -128,7 +130,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/json-loader
        */
-      { test: /\.json$/, loader: 'json-loader', exclude: [helpers.root('src/index.html')] },
+      {test: /\.json$/, loader: 'json-loader', exclude: [helpers.root('src/index.html')]},
 
       /**
        * Raw loader support for *.css files
@@ -136,7 +138,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      { test: /\.css$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')] },
+      {test: /\.css$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')]},
 
       /**
        * Raw loader support for *.html
@@ -144,7 +146,7 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      { test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')] }
+      {test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')]}
 
     ],
 
@@ -162,7 +164,8 @@ module.exports = {
        * See: https://github.com/deepsweet/istanbul-instrumenter-loader
        */
       {
-        test: /\.(js|ts)$/, loader: 'istanbul-instrumenter-loader',
+        test: /\.(js|ts)$/,
+        loader: 'istanbul-instrumenter-loader',
         include: helpers.root('src'),
         exclude: [
           /\.(e2e|spec)\.ts$/,
@@ -191,14 +194,14 @@ module.exports = {
      */
     // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
     new DefinePlugin({
-      'ENV': JSON.stringify(ENV),
-      'HMR': false,
+      ENV: JSON.stringify(ENV),
+      HMR: false,
       'process.env': {
-        'ENV': JSON.stringify(ENV),
-        'NODE_ENV': JSON.stringify(ENV),
-        'HMR': false,
+        ENV: JSON.stringify(ENV),
+        NODE_ENV: JSON.stringify(ENV),
+        HMR: false
       }
-    }),
+    })
 
 
   ],

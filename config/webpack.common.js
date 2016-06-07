@@ -4,6 +4,7 @@
 'use strict';
 const conf = require('../ac-config');
 
+const path = require('path');
 const webpack = require('webpack');
 const helpers = require('./helpers');
 
@@ -11,7 +12,7 @@ const helpers = require('./helpers');
  * Webpack Plugins
  */
 // problem with copy-webpack-plugin
-const CopyWebpackPlugin = require('copy-webpack-plugin').default;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
@@ -28,7 +29,7 @@ const METADATA = {
  *
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
-module.exports = {
+const config = {
 
   /*
    * Static metadata for index.html
@@ -44,7 +45,7 @@ module.exports = {
    *
    * See: http://webpack.github.io/docs/configuration.html#cache
    */
-   //cache: false,
+  //cache: false,
 
   /*
    * The entry point for the bundle
@@ -69,7 +70,7 @@ module.exports = {
     extensions: ['', '.ts', '.js'],
 
     // Make sure root is src
-    root: helpers.root(conf.root),
+    root: helpers.root(conf.src),
 
     // remove other default values
     modulesDirectories: ['node_modules'],
@@ -96,7 +97,7 @@ module.exports = {
        *
        * See: https://github.com/wbuchwalter/tslint-loader
        */
-       // { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
+      // { test: /\.ts$/, loader: 'tslint-loader', exclude: [ helpers.root('node_modules') ] },
 
       /*
        * Source map loader support for *.js files
@@ -167,7 +168,7 @@ module.exports = {
         test: /\.html$/,
         loader: 'raw-loader',
         // exclude: [helpers.root('src/index.html')]
-        exclude: (conf.htmlExclude || []).map(str => helpers.root(str))
+        exclude: conf.htmlIndexes.map(str => helpers.root(path.join(conf.src, str)))
       },
       // support markdown
       {test: /\.md$/, loader: 'html!markdown'}
@@ -208,9 +209,7 @@ module.exports = {
      * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
      * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
      */
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['polyfills', 'vendor'].reverse()
-    }),
+    new webpack.optimize.CommonsChunkPlugin(conf.commonChunks),
 
     /*
      * Plugin: CopyWebpackPlugin
@@ -220,24 +219,7 @@ module.exports = {
      *
      * See: https://www.npmjs.com/package/copy-webpack-plugin
      */
-    new CopyWebpackPlugin(conf.copy),
-
-    /*
-     * Plugin: HtmlWebpackPlugin
-     * Description: Simplifies creation of HTML files to serve your webpack bundles.
-     * This is especially useful for webpack bundles that include a hash in the filename
-     * which changes every compilation.
-     *
-     * See: https://github.com/ampedandwired/html-webpack-plugin
-     */
-    new HtmlWebpackPlugin({
-      template: 'demo/index.html',
-      chunksSortMode: 'dependency'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'demo/index-bs4.html',
-      chunksSortMode: 'dependency'
-    })
+    new CopyWebpackPlugin(conf.copy)
 
   ],
 
@@ -256,3 +238,20 @@ module.exports = {
   }
 
 };
+
+/*
+ * Plugin: HtmlWebpackPlugin
+ * Description: Simplifies creation of HTML files to serve your webpack bundles.
+ * This is especially useful for webpack bundles that include a hash in the filename
+ * which changes every compilation.
+ *
+ * See: https://github.com/ampedandwired/html-webpack-plugin
+ */
+conf.htmlIndexes
+  .forEach(index => config.plugins.push(new HtmlWebpackPlugin({
+    template: path.join(conf.src, index),
+    filename: index,
+    chunksSortMode: 'dependency'
+  })));
+
+module.exports = config;

@@ -11,6 +11,8 @@
  * file for our client, when we run test, it will compile and bundle them
  * all here! Crazy huh. So we need to do some setup
  */
+'use strict';
+
 Error.stackTraceLimit = Infinity;
 
 require('core-js');
@@ -47,7 +49,7 @@ Object.assign(global, testing);
  * any file that ends with spec.js and get its path. By passing in true
  * we say do this recursively
  */
-var testContext = require.context('../src', true, /\.spec\.ts/);
+const testContext = require.context('../src', true, /\.spec\.ts/);
 
 /*
  * get all the files, for each file, call the context function
@@ -59,4 +61,4 @@ function requireAll(requireContext) {
 }
 
 // requires and returns all modules that match
-const modules = requireAll(testContext);
+requireAll(testContext);

@@ -15,9 +15,9 @@ import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from '@angular/co
 declare const PR:any;
 
 // todo: enable prod mod only for prod build
-// if (false) {
+if (ENV) {
 enableProdMode();
-// }
+}
 
 let w:any = window;
 

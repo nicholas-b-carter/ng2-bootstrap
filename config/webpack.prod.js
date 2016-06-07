@@ -1,15 +1,22 @@
+/*eslint no-process-env: 0 */
 /**
  * @author: @AngularClass
  */
+'use strict';
+
+const DEFAULT_PORT = 8080;
+const DEFAULT_COMPRESSION_TRESHOLD = 2048;
 
 const helpers = require('./helpers');
-const webpackMerge = require('webpack-merge'); // used to merge webpack configs
-const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
+// used to merge webpack configs
+const webpackMerge = require('webpack-merge');
+// the settings that are common to prod and dev
+const commonConfig = require('./webpack.common.js');
 
 /**
  * Webpack Plugins
  */
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
+// const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
@@ -21,11 +28,11 @@ const WebpackMd5Hash = require('webpack-md5-hash');
  */
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || DEFAULT_PORT;
 const METADATA = webpackMerge(commonConfig.metadata, {
   host: HOST,
   port: PORT,
-  ENV: ENV,
+  ENV,
   HMR: false
 });
 
@@ -122,12 +129,12 @@ module.exports = webpackMerge(commonConfig, {
      */
     // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
     new DefinePlugin({
-      'ENV': JSON.stringify(METADATA.ENV),
-      'HMR': METADATA.HMR,
+      ENV: JSON.stringify(METADATA.ENV),
+      HMR: METADATA.HMR,
       'process.env': {
-        'ENV': JSON.stringify(METADATA.ENV),
-        'NODE_ENV': JSON.stringify(METADATA.ENV),
-        'HMR': METADATA.HMR,
+        ENV: JSON.stringify(METADATA.ENV),
+        NODE_ENV: JSON.stringify(METADATA.ENV),
+        HMR: METADATA.HMR
       }
     }),
 
@@ -154,18 +161,19 @@ module.exports = webpackMerge(commonConfig, {
       // }, // debug
       // comments: true, //debug
 
-      beautify: false, //prod
+      beautify: false,
 
+      /*eslint camelcase: 0*/
       mangle: {
-        screw_ie8 : true,
+        screw_ie8: true,
         keep_fnames: true
-      }, //prod
+      },
 
       compress: {
         screw_ie8: true
-      }, //prod
+      },
 
-      comments: false //prod
+      comments: false
     }),
 
     /**
@@ -177,7 +185,7 @@ module.exports = webpackMerge(commonConfig, {
      */
     new CompressionPlugin({
       regExp: /\.css$|\.html$|\.js$|\.map$/,
-      threshold: 2 * 1024
+      threshold: DEFAULT_COMPRESSION_TRESHOLD
     })
 
   ],

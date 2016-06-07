@@ -1,3 +1,4 @@
+/*eslint no-process-env:0 */
 /**
  * @author: @AngularClass
  */
@@ -23,8 +24,8 @@ const HMR = helpers.hasProcessFlag('hot');
 const METADATA = webpackMerge(commonConfig.metadata, {
   host: 'localhost',
   port: 3000,
-  ENV: ENV,
-  HMR: HMR
+  ENV,
+  HMR
 });
 
 /**
@@ -32,7 +33,7 @@ const METADATA = webpackMerge(commonConfig.metadata, {
  *
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
-module.exports = webpackMerge(commonConfig, {
+const config = webpackMerge(commonConfig, {
 
   /**
    * Merged metadata from webpack.common.js for index.html
@@ -68,7 +69,7 @@ module.exports = webpackMerge(commonConfig, {
      *
      * See: http://webpack.github.io/docs/configuration.html#output-path
      */
-    path: helpers.root(conf.output.path),
+    path: helpers.root(conf.dist),
 
     /**
      * Specifies the name of each output file on disk.
@@ -108,12 +109,12 @@ module.exports = webpackMerge(commonConfig, {
      */
     // NOTE: when adding more properties, make sure you include them in custom-typings.d.ts
     new DefinePlugin({
-      'ENV': JSON.stringify(METADATA.ENV),
-      'HMR': METADATA.HMR,
+      ENV: JSON.stringify(METADATA.ENV),
+      HMR: METADATA.HMR,
       'process.env': {
-        'ENV': JSON.stringify(METADATA.ENV),
-        'NODE_ENV': JSON.stringify(METADATA.ENV),
-        'HMR': METADATA.HMR,
+        ENV: JSON.stringify(METADATA.ENV),
+        NODE_ENV: JSON.stringify(METADATA.ENV),
+        HMR: METADATA.HMR
       }
     })
   ],
@@ -127,7 +128,7 @@ module.exports = webpackMerge(commonConfig, {
   tslint: {
     emitErrors: false,
     failOnHint: false,
-    resourcePath: conf.root
+    resourcePath: conf.src
   },
 
   /**
@@ -146,7 +147,7 @@ module.exports = webpackMerge(commonConfig, {
       aggregateTimeout: 300,
       poll: 1000
     },
-    outputPath: helpers.root(conf.output.path)
+    outputPath: helpers.root(conf.dist)
   },
 
   /*
@@ -163,5 +164,6 @@ module.exports = webpackMerge(commonConfig, {
     clearImmediate: false,
     setImmediate: false
   }
-
 });
+
+module.exports = config;
