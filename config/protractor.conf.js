@@ -4,15 +4,15 @@
 'use strict';
 
 require('ts-node/register');
-const helpers = require('./helpers');
+var helpers = require('./helpers');
 
 exports.config = {
   baseUrl: 'http://localhost:3000/',
 
   // use `npm run e2e`
   specs: [
-    helpers.root('src/**/**.e2e.ts'),
-    helpers.root('src/**/*.e2e.ts')
+    helpers.root('components/**/**.e2e.ts'),
+    helpers.root('components/**/*.e2e.ts')
   ],
   exclude: [],
 

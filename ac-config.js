@@ -1,3 +1,4 @@
+/* eslint no-var:0 */
 'use strict';
 var pkg = require('./package.json');
 
@@ -7,7 +8,6 @@ module.exports = {
   baseUrl: '/',
   // root folder name
   src: 'demo',
-  src_comp: 'components',
   dist: 'demo-build',
   htmlIndexes: ['index.html', 'index-bs4.html'],
   // webpack entry
