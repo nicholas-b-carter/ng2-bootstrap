@@ -1,32 +1,35 @@
-'use strict';
-/* eslint-disable */
+/* eslint no-process-env: 0, global-require:0 */
 /**
  * @author: @AngularClass
  */
-let conf;
-// Look in ./config folder for webpack.dev.js
-switch (process.env.NODE_ENV) {
-  case 'prod':
-  case 'production':
-    conf = require('./config/webpack.prod');
-    break;
-  case 'test':
-  case 'testing':
-    conf = require('./config/webpack.test');
-    break;
-  case 'dev':
-  case 'development':
-  default:
-    conf = require('./config/webpack.dev');
-}
+'use strict';
 
-const marked = require('marked');
+// Look in ./config folder for webpack.dev.js
+const conf = getWebpackConfig(process.env.NODE_ENV, require('./ac-config'));
+
 // marked renderer hack
+const marked = require('marked');
+
 marked.Renderer.prototype.code = function renderCode(code, lang) {
   if (!lang) {
-    return `<pre class="prettyprint">${code}</pre>`;
+    return `<pre class="prettyprint" ngNonBindable>${code}</pre>`;
   }
-  return `<pre class="prettyprint lang-${lang}">${code}</pre>`;
+  return `<pre class="prettyprint lang-${lang}" ngNonBindable>${code}</pre>`;
 };
 
 module.exports = conf;
+
+function getWebpackConfig(env, config) {
+  switch (env) {
+  case 'prod':
+  case 'production':
+    return require('ng2-webpack-config/config/webpack.prod')(config);
+  case 'test':
+  case 'testing':
+    return require('ng2-webpack-config/config/webpack.test')(config);
+  case 'dev':
+  case 'development':
+  default:
+    return require('ng2-webpack-config/config/webpack.dev')(config);
+  }
+}

@@ -1,8 +1,0 @@
-{
-  "rules": {
-    "no-var": 0,
-    "no-console": 0,
-    "prefer-template": 0,
-    "valid-jsdoc": 0
-  }
-}
